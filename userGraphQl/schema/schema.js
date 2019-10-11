@@ -1,20 +1,16 @@
 const graphql = require('graphql');
-const _ = require('lodash');
+const fetch = require('node-fetch');
 
 const { GraphQLObjectType, GraphQLID, GraphQLString, GraphQLInt, GraphQLSchema } = graphql;
 
-const users = [
-    {
-        id: '23',
-        firstName: 'Bill',
-        age: 20,
+const CompanyType = new GraphQLObjectType({
+    name: 'company',
+    fields: {
+        id: { type: GraphQLID },
+        name: { type: GraphQLString },
+        description: { type: GraphQLString },
     },
-    {
-        id: '423',
-        firstName: 'Jade',
-        age: 25,
-    },
-];
+});
 
 const UserType = new GraphQLObjectType({
     name: 'User',
@@ -22,8 +18,15 @@ const UserType = new GraphQLObjectType({
         id: { type: GraphQLID },
         firstName: { type: GraphQLString },
         age: { type: GraphQLInt },
-        // companyId: { type: GraphQLID },
-        // position: { type: GraphQLID },
+        companyId: { type: GraphQLID },
+        company: {
+            type: CompanyType,
+            resolve(parentValue, _) {
+                return fetch(`http://localhost:3000/companies/${parentValue.companyId}`).then(res =>
+                    res.json()
+                );
+            },
+        },
     },
 });
 
@@ -32,11 +35,18 @@ const RootQuery = new GraphQLObjectType({
     fields: {
         user: {
             type: UserType,
-            args: { id: { type: GraphQLID } },
-            resolve(parentValue, args) {
-                // code to get data from db / other source
-                console.log(typeof args.id);
-                return _.find(users, { id: args.id });
+            args: { id: { type: GraphQLString } },
+            resolve(_, args) {
+                return fetch(`http://localhost:3000/users/${args.id}`).then(resp => resp.json());
+            },
+        },
+        company: {
+            type: CompanyType,
+            args: { id: { type: GraphQLString } },
+            resolve(_, args) {
+                return fetch(`http://localhost:3000/companies/${args.id}`).then(resp =>
+                    resp.json()
+                );
             },
         },
     },
