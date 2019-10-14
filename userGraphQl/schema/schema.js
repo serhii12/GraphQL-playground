@@ -8,6 +8,7 @@ const {
     GraphQLInt,
     GraphQLSchema,
     GraphQLList,
+    GraphQLNonNull,
 } = graphql;
 
 const CompanyType = new GraphQLObjectType({
@@ -67,6 +68,39 @@ const RootQuery = new GraphQLObjectType({
     },
 });
 
+const mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    fields: {
+        addUser: {
+            type: UserType,
+            args: {
+                firstName: { type: new GraphQLNonNull(GraphQLString) },
+                age: { type: new GraphQLNonNull(GraphQLInt) },
+                companyId: { type: GraphQLID },
+            },
+            resolve(_, { firstName, age }) {
+                const body = { firstName, age };
+
+                return fetch('http://localhost:3000/users', {
+                    method: 'POST',
+                    body: JSON.stringify(body),
+                    headers: { 'Content-Type': 'application/json' },
+                }).then(res => res.json());
+            },
+        },
+        deleteUser: {
+            type: UserType,
+            args: { id: { type: new GraphQLNonNull(GraphQLID) } },
+            resolve(_, { id: userId }) {
+                return fetch(`http://localhost:3000/users/${userId}`, {
+                    method: 'DELETE',
+                }).then(res => res.json());
+            },
+        },
+    },
+});
+
 module.exports = new GraphQLSchema({
     query: RootQuery,
+    mutation,
 });
