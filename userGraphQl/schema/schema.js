@@ -97,6 +97,24 @@ const mutation = new GraphQLObjectType({
                 }).then(res => res.json());
             },
         },
+        updateUser: {
+            type: UserType,
+            args: {
+                id: { type: new GraphQLNonNull(GraphQLID) },
+                firstName: { type: GraphQLString },
+                age: { type: GraphQLInt },
+                companyId: { type: GraphQLID },
+            },
+            resolve(_, { id: userId, firstName, age, companyId }) {
+                const body = { firstName, age, companyId };
+
+                return fetch(`http://localhost:3000/users/${userId}`, {
+                    method: 'PATCH',
+                    body: JSON.stringify(body),
+                    headers: { 'Content-Type': 'application/json' },
+                }).then(res => res.json());
+            },
+        },
     },
 });
 

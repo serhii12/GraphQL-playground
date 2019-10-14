@@ -19,9 +19,10 @@
       "companyId": "1"
     },
     {
-      "firstName": "John",
-      "age": 22,
-      "id": "RF1K_Ok"
+      "firstName": "Max",
+      "age": 19,
+      "id": "RF1K_Ok",
+      "companyId": "1"
     }
   ],
   "companies": [
