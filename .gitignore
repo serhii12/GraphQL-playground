@@ -2,6 +2,7 @@
 
 # dependencies
 node_modules
+node_modules/
 /.pnp
 .pnp.js
 
@@ -21,7 +22,7 @@ config.env
 .eslintrc.json
 .eslintcache
 .cache
-
+variables.env
 
 npm-debug.log*
 yarn-debug.log*
