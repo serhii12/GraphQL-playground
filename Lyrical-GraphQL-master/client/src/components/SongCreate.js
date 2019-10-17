@@ -13,7 +13,7 @@ const ADD_NEW_SONG = gql`
     }
 `;
 
-const SongCreate = props => {
+const SongCreate = () => {
     const [addSong] = useMutation(ADD_NEW_SONG);
 
     const [title, setTitle] = useState('');
@@ -21,8 +21,8 @@ const SongCreate = props => {
     const _onSubmit = e => {
         e.preventDefault();
 
-        addSong({ variables: { title }, refetchQueries: [{ FETCH_SONGS }] }).then(() => {
-            return hashHistory.push('/');
+        addSong({ variables: { title }, refetchQueries: [{ query: FETCH_SONGS }] }).then(() => {
+            hashHistory.push('/');
         });
     };
 

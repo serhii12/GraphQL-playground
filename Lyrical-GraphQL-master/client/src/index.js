@@ -7,7 +7,7 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import App from './App';
 import SongList from './components/SongList';
 import SongCreate from './components/SongCreate';
-// import SongDetail from './components/SongDetail';
+import SongDetail from './components/SongDetail';
 
 import './index.css';
 
@@ -21,7 +21,7 @@ render(
             <Route path="/" component={App}>
                 <IndexRoute component={SongList} />
                 <Route path="songs/new" component={SongCreate} />
-                {/* <Route path="songs/:id" component={SongDetail} /> */}
+                <Route path="songs/:id" component={SongDetail} />
             </Route>
         </Router>
     </ApolloProvider>,
