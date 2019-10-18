@@ -14,11 +14,11 @@ export const FETCH_SONG = gql`
         song(id: $id) {
             id
             title
-            # lyrics {
-            #     id
-            #     content
-            #     likes
-            # }
+            lyrics {
+                id
+                content
+                likes
+            }
         }
     }
 `;

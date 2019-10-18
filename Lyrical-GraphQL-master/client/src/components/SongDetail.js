@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
 import { useQuery } from '@apollo/react-hooks';
+import LyricCreate from './LyricCreate';
+import LyricList from './LyricList';
 import { FETCH_SONG } from '../queries';
 
 const SongDetail = props => {
@@ -16,8 +18,8 @@ const SongDetail = props => {
         <div>
             <Link to="/">Back</Link>
             <h3>{song.title}</h3>
-            {/* <LyricList lyrics={song.lyrics} />
-            <LyricCreate songId={props.params.id} /> */}
+            <LyricList lyrics={song.lyrics} />
+            <LyricCreate songId={props.params.id} />
         </div>
     );
 };
