@@ -2,6 +2,8 @@
 require('dotenv').config({ path: 'variables.env' });
 
 const mongoose = require('mongoose');
+const models = require('./models');
+const passportConfig = require('./services/auth');
 
 mongoose.connect(process.env.DATABASE, { useNewUrlParser: true });
 // Tell Mongoose to use ES6 promises
@@ -10,9 +12,6 @@ mongoose.Promise = global.Promise;
 mongoose.connection.on('error', err => {
     console.error(`🙅 🚫 🙅 🚫 🙅 🚫 🙅 🚫 → ${err.message}`);
 });
-
-// import all of our models
-require('./models/User');
 
 const app = require('./app');
 app.set('port', process.env.PORT || 4000);

@@ -1,16 +1,16 @@
 require('dotenv').config({ path: 'variables.env' });
 
 const express = require('express');
+const expressGraphQL = require('express-graphql');
+const cors = require('cors');
+const mongoose = require('mongoose');
 const session = require('express-session');
+const passport = require('passport');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
-const passport = require('passport');
-const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo')(session);
-const expressGraphQL = require('express-graphql');
-// const passportConfig = require('./services/auth');
-const MongoStore = require('connect-mongo')(session);
-const schema = require('./schema');
+const passportConfig = require('./services/auth');
+const schema = require('./schema/schema');
 
 // create our Express app
 const app = express();
